@@ -1,4 +1,4 @@
 [core]
     remote = storage
 ['remote "storage"']
-    url = gdrive://1P5J2K60bOk0sF7xjN4v0dmgJiqLxjeQy/bbc_classification_data
+    url = gdrive://1P5J2K60bOk0sF7xjN4v0dmgJiqLxjeQy/
