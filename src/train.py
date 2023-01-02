@@ -36,13 +36,14 @@ def train(config_path: str):
 
     model.save()
 
+
 def parse_args():
     default_path = "/home/dkrivenkov/program/mipt_mle/news_classification/configs/train_config.ini"
-    
-    parser=argparse.ArgumentParser(description="predict script")
+    parser = argparse.ArgumentParser(description="predict script")
     parser.add_argument("--config_path", type=str, default=default_path)
-    args=parser.parse_args()
+    args = parser.parse_args()
     return args
+
 
 if __name__ == "__main__":
     args = parse_args()

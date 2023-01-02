@@ -28,7 +28,9 @@ def predict(config_path: str):
     with open(config["PREPROCESSOR"]["target_mapping"], "r") as fp:
         category2id = json.load(fp)
 
-    id2category = {v : k for k, v in category2id.items()}
+    id2category = {
+        v: k for k, v in category2id.items()
+    }
 
     logger.debug("Starting predict stage")
     pred = model.predict(test_data.Text)
@@ -38,7 +40,7 @@ def predict(config_path: str):
 
     solution = pd.DataFrame(
         data={
-            "ArticleId" : test_data.ArticleId.values,
+            "ArticleId": test_data.ArticleId.values,
             "Category": pred_category
         }
     )
@@ -47,11 +49,11 @@ def predict(config_path: str):
 
 def parse_args():
     default_path = "/home/dkrivenkov/program/mipt_mle/news_classification/configs/train_config.ini"
-
-    parser=argparse.ArgumentParser(description="predict script")
+    parser = argparse.ArgumentParser(description="predict script")
     parser.add_argument("--config_path", type=str, default=default_path)
-    args=parser.parse_args()
+    args = parser.parse_args()
     return args
+
 
 if __name__ == "__main__":
     args = parse_args()

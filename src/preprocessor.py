@@ -6,7 +6,7 @@ import configparser
 import pandas as pd
 import numpy as np
 
-
+logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 
@@ -23,10 +23,13 @@ class BCCPreprocessor:
         data = pd.read_csv(self.config["PREPROCESSOR"]["data_path_test"])
         return data
 
-    def target_transform(self, data, mode: str="train"):
+    def target_transform(self, data, mode: str = "train"):
         if mode == "train":
             unique_category = np.unique(data.Category)
-            self.category2id = dict(zip(unique_category, range(len(unique_category))))
+            self.category2id = dict(zip(
+                unique_category,
+                range(len(unique_category))
+            ))
         data.Category = data.Category.map(lambda x: self.category2id[x])
 
     def split_data(self, data: pd.DataFrame):
@@ -42,29 +45,28 @@ class BCCPreprocessor:
 
         return data.iloc[train_idx], data.iloc[test_idxs]
 
-
-    def save_data(self, data: pd.DataFrame, mode: str="train"):
+    def save_data(self, data: pd.DataFrame, mode: str = "train"):
         experiments_dir = self.config["PREPROCESSOR"]["experiments_dir"]
         if not os.path.exists(experiments_dir):
             os.mkdir(experiments_dir)
 
         if mode == "train":
             train_split_path = os.path.join(
-                experiments_dir, 
+                experiments_dir,
                 "BBC_News_Train_Split.csv"
             )
             logger.debug(f"Try to save data to: {train_split_path}")
             data.to_csv(train_split_path, index=False)
         elif mode == "val":
             val_split_path = os.path.join(
-                experiments_dir, 
+                experiments_dir,
                 "BBC_News_Val_Split.csv"
             )
             logger.debug(f"Try to save data to: {val_split_path}")
             data.to_csv(val_split_path, index=False)
         elif mode == "test":
             test_split_path = os.path.join(
-                experiments_dir, 
+                experiments_dir,
                 "BBC_News_Test_Split.csv"
             )
             logger.debug(f"Try to save data to: {test_split_path}")
@@ -74,7 +76,8 @@ class BCCPreprocessor:
 
     def save_metadata(self):
         with open(self.config["PREPROCESSOR"]["target_mapping"], "w") as fp:
-            json.dump(self.category2id,fp)
+            json.dump(self.category2id, fp)
+
 
 def parse_args():
     default_path = "/home/dkrivenkov/program/mipt_mle/news_classification/configs/train_config.ini"
