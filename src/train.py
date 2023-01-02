@@ -1,3 +1,4 @@
+import argparse
 import os
 import logging
 import configparser
@@ -9,6 +10,7 @@ from model import BBCModel
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
+
 def train(config_path: str):
     logger.debug("Parse config...")
     config = configparser.ConfigParser()
@@ -16,8 +18,12 @@ def train(config_path: str):
 
     model = BBCModel(config["MODEL"])
 
-    train_data = pd.read_csv(config["PREPROCESSOR"]["train_preprocessed"])
-    val_data = pd.read_csv(config["PREPROCESSOR"]["val_preprocessed"])
+    experiments_dir = config["PREPROCESSOR"]["experiments_dir"]
+    train_split_path = os.path.join(experiments_dir, "BBC_News_Train_Split.csv")
+    train_data = pd.read_csv(train_split_path)
+
+    val_split_path = os.path.join(experiments_dir, "BBC_News_Val_Split.csv")
+    val_data = pd.read_csv(val_split_path)
 
     model.fit(train_data.Text, train_data.Category)
     pred = model.predict(train_data.Text)
@@ -30,6 +36,14 @@ def train(config_path: str):
 
     model.save()
 
+def parse_args():
+    default_path = "/home/dkrivenkov/program/mipt_mle/news_classification/configs/train_config.ini"
+    
+    parser=argparse.ArgumentParser(description="predict script")
+    parser.add_argument("--config_path", type=str, default=default_path)
+    args=parser.parse_args()
+    return args
+
 if __name__ == "__main__":
-    config_path = "/home/dkrivenkov/program/mipt_mle/news_classification/configs/train_config.ini"
-    train(config_path)
+    args = parse_args()
+    train(args.config_path)
