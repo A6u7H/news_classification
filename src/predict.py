@@ -1,14 +1,13 @@
-import os
 import json
+import os
 import logging
+import argparse
 import numpy as np
 import pandas as pd
 import configparser
 
-from omegaconf import DictConfig
-
 from model import BBCModel
-from preprocessor import BCCPreprocessor
+
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
@@ -22,7 +21,9 @@ def predict(config_path: str):
     model = BBCModel(config["MODEL"])
     model.load()
 
-    test_data = pd.read_csv(config["PREPROCESSOR"]["test_preprocessed"])
+    experiments_dir = config["PREPROCESSOR"]["experiments_dir"]
+    test_data_path = os.path.join(experiments_dir, "BBC_News_Test_Split.csv")
+    test_data = pd.read_csv(test_data_path)
 
     with open(config["PREPROCESSOR"]["target_mapping"], "r") as fp:
         category2id = json.load(fp)
@@ -43,6 +44,15 @@ def predict(config_path: str):
     )
     solution.to_csv(config["SOLUTION"]["save_path"], index=False)
 
+
+def parse_args():
+    default_path = "/home/dkrivenkov/program/mipt_mle/news_classification/configs/train_config.ini"
+
+    parser=argparse.ArgumentParser(description="predict script")
+    parser.add_argument("--config_path", type=str, default=default_path)
+    args=parser.parse_args()
+    return args
+
 if __name__ == "__main__":
-    config_path = "/home/dkrivenkov/program/mipt_mle/news_classification/configs/train_config.ini"
-    predict(config_path)
+    args = parse_args()
+    predict(args.config_path)
