@@ -24,9 +24,10 @@ pipeline {
                 }
             }
         }
-        
+
         stage('Login'){
             steps {
+                echo "%DOCKERHUB_USR%"
                 sh "docker login -u %DOCKERHUB_USR% -p %DOCKERHUB_PSW%"
             }
         }
