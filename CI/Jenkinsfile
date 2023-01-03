@@ -20,7 +20,6 @@ pipeline {
             steps {
                 cleanWs()
                 sh "git clone -b main https://github.com/A6u7H/news_classification"
-                sh "dir"
 			}
         }
 
@@ -41,6 +40,17 @@ pipeline {
                     }
                 }
             }
+        }
+
+        stage('Push'){
+            steps {
+                sh "sudo docker push danjiii/bcc-classification:latest"
+            }
+        }
+    }
+    post {
+        always {
+            sh "sudo docker logout"
         }
     }
 }
