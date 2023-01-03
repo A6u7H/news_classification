@@ -25,12 +25,31 @@ pipeline {
             }
         }
 
-        stage('Login'){
+        // stage('Login'){
+        //     steps {
+        //         // echo "%DOCKERHUB_USR%"
+        //         // sh "docker login -u $%DOCKERHUB_CREDENTIALS_USR% -p $%DOCKERHUB_CREDENTIALS_PSW%"
+        //         sh "docker login -u $DOCKERHUB_CREDS_USR -p $DOCKERHUB_CREDS_PSW"
+        //         // sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
+        //     }
+        // }
+
+        stage('Create and run docker container') {
             steps {
-                // echo "%DOCKERHUB_USR%"
-                // sh "docker login -u $%DOCKERHUB_CREDENTIALS_USR% -p $%DOCKERHUB_CREDENTIALS_PSW%"
-                sh "docker login -u $DOCKERHUB_CREDS_USR -p $DOCKERHUB_CREDS_PSW"
-                // sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
+                script {
+                    try {
+                        sh "docker-compose build"
+                    }
+                    finally {
+                        sh "docker-compose up -d"
+                    }
+                }
+            }
+        }
+
+        stage('Push'){
+            steps{
+                sh "docker push danjiii/bcc-classification:latest"
             }
         }
     }
