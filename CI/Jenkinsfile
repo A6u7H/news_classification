@@ -20,7 +20,7 @@ pipeline {
             steps {
                 script {
                     echo "Hello world"
-                    sh ls
+                    sh "ls"
                 }
             }
         }
