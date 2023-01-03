@@ -7,6 +7,7 @@ from omegaconf import DictConfig
 from typing import Optional
 from sklearn.feature_extraction.text import TfidfVectorizer
 
+logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
@@ -20,26 +21,26 @@ class BBCModel:
         return TfidfVectorizer()
 
     def create_model(self):
-        logger.debug(f"Creating model: {self.config['type']}...")
+        logger.info(f"Creating model: {self.config['type']}...")
         if self.config["type"] == "svm":
             classifier = SVC(
-                kernel=self.config["kernel"], 
+                kernel=self.config["kernel"],
                 random_state=self.config.getint("random_state")
             )
         else:
             raise ValueError(f"Model type {self.config['type']} does not exist")
-        logger.debug("Model has created")
+        logger.info("Model has created")
         return classifier
 
     def fit(self, texts, target):
         features = self.vectorizer.fit_transform(texts)
-        logger.debug(f"Starting train model: {self.config['type']}...")
+        logger.info(f"Starting train model: {self.config['type']}...")
         self.model.fit(features, target)
-        logger.debug("Model has trained")
+        logger.info("Model has trained")
 
     def predict(self, texts):
         features = self.vectorizer.transform(texts)
-        logger.debug(f"Predicting: {self.config['type']}...")
+        logger.info(f"Predicting: {self.config['type']}...")
         return self.model.predict(features)
 
     def save(self, save_folder: Optional[str]=None) -> None:
@@ -54,7 +55,7 @@ class BBCModel:
         with open(model_path, 'wb') as f:
             pickle.dump(self.model, f)
 
-        logger.debug("Model and config have saved")
+        logger.info("Model and config have saved")
 
     def load(self, load_folder: Optional[str]=None) -> None:
         if load_folder is None:
@@ -67,5 +68,3 @@ class BBCModel:
         vectorizer_path = os.path.join(load_folder, "vectorizer.pickle")
         with open(vectorizer_path, 'rb') as f:
             self.vectorizer = pickle.load(f)
-
-

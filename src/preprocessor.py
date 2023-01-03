@@ -6,7 +6,7 @@ import configparser
 import pandas as pd
 import numpy as np
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
@@ -55,21 +55,21 @@ class BCCPreprocessor:
                 experiments_dir,
                 "BBC_News_Train_Split.csv"
             )
-            logger.debug(f"Try to save data to: {train_split_path}")
+            logger.info(f"Try to save data to: {train_split_path}")
             data.to_csv(train_split_path, index=False)
         elif mode == "val":
             val_split_path = os.path.join(
                 experiments_dir,
                 "BBC_News_Val_Split.csv"
             )
-            logger.debug(f"Try to save data to: {val_split_path}")
+            logger.info(f"Try to save data to: {val_split_path}")
             data.to_csv(val_split_path, index=False)
         elif mode == "test":
             test_split_path = os.path.join(
                 experiments_dir,
                 "BBC_News_Test_Split.csv"
             )
-            logger.debug(f"Try to save data to: {test_split_path}")
+            logger.info(f"Try to save data to: {test_split_path}")
             data.to_csv(test_split_path, index=False)
         else:
             raise ValueError(f"Current mode {mode} not exist")
@@ -81,10 +81,9 @@ class BCCPreprocessor:
 
 def parse_args():
     default_path = "/home/dkrivenkov/program/mipt_mle/news_classification/configs/train_config.ini"
-    
-    parser=argparse.ArgumentParser(description="predict script")
+    parser = argparse.ArgumentParser(description="predict script")
     parser.add_argument("--config_path", type=str, default=default_path)
-    args=parser.parse_args()
+    args = parser.parse_args()
     return args
 
 

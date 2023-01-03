@@ -9,12 +9,12 @@ import configparser
 from model import BBCModel
 
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
 def predict(config_path: str):
-    logger.debug("Parse config...")
+    logger.info("Parse config...")
     config = configparser.ConfigParser()
     config.read(config_path)
 
@@ -32,7 +32,7 @@ def predict(config_path: str):
         v: k for k, v in category2id.items()
     }
 
-    logger.debug("Starting predict stage")
+    logger.info("Starting predict stage")
     pred = model.predict(test_data.Text)
 
     func = np.vectorize(lambda x: id2category[x])

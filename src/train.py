@@ -7,7 +7,7 @@ import pandas as pd
 from model import BBCModel
 
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
