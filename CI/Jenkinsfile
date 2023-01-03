@@ -34,10 +34,10 @@ pipeline {
             steps {
                 script {
                     try {
-                        sh "cd news_classification && docker compose build"
+                        sh "cd news_classification && sudo docker compose build"
                     }
                     finally {
-                        sh "cd news_classification && docker compose up -d"
+                        sh "cd news_classification && sudo docker compose up -d"
                     }
                 }
             }
