@@ -28,7 +28,6 @@ pipeline {
                 sh "sudo docker login -u ${DOCKERHUB_USR} -p ${DOCKERHUB_PSW}"
             }
         }
-
         stage('Create and run docker container') {
             steps {
                 script {
@@ -41,14 +40,13 @@ pipeline {
                 }
             }
         }
-
-        // stage('Push'){
-        //     steps {
-        //         sh "sudo docker push danjiii/bcc-classification:latest"
-        //     }
-        // }
+        stage('Push'){
+            steps {
+                sh "sudo docker push danjiii/bcc-classification:latest"
+            }
+        }
     }
-    
+
     post {
         always {
             sh "sudo docker logout"
