@@ -20,6 +20,7 @@ pipeline {
             steps {
                 cleanWs()
                 sh "git clone -b main https://github.com/A6u7H/news_classification"
+                sh "dir"
 			}
         }
 
@@ -33,6 +34,7 @@ pipeline {
             steps {
                 script {
                     sh "cd news_classification"
+                    sh "dir"
                     try {
                         sh "docker compose build"
                     }
