@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    triggers {
+        pipelineTriggers([cron('H/30 * * * *'), githubPush()])
+    }
+
     environment {
         DOCKERHUB = credentials('dockerhub')
     }
