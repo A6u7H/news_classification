@@ -28,7 +28,7 @@ pipeline {
             steps {
                 // echo "%DOCKERHUB_USR%"
                 // sh "docker login -u $%DOCKERHUB_CREDENTIALS_USR% -p $%DOCKERHUB_CREDENTIALS_PSW%"
-                sh "docker login -u danjiii -p $P{DOCKERHUB_CREDENTIALS_PSW}"
+                sh "docker login -u danjiii -p ${DOCKERHUB_CREDENTIALS_PSW}"
                 // sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
             }
         }
@@ -37,6 +37,7 @@ pipeline {
             steps {
                 script {
                     try {
+                        sh "ls"
                         sh "docker compose build"
                     }
                     finally {
