@@ -48,6 +48,7 @@ pipeline {
         //     }
         // }
     }
+    
     post {
         always {
             sh "sudo docker logout"
