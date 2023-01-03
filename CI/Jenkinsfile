@@ -26,7 +26,7 @@ pipeline {
 
         stage('Login'){
             steps {
-                sh "sudo docker login -u ${DOCKERHUB_USR} -p ${DOCKERHUB_PSW}"
+                sh "sudo docker login -u %DOCKERHUB_USR% -p %DOCKERHUB_PSW%"
             }
         }
 
