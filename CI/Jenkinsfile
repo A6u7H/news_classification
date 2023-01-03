@@ -38,10 +38,11 @@ pipeline {
             steps {
                 script {
                     try {
+                        sh "ls"
                         sh "docker compose build"
                     }
                     finally {
-                        sh "docker compose up -d"
+                        sh "docker compose up"
                     }
                 }
             }
