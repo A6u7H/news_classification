@@ -16,12 +16,12 @@ pipeline {
 	}
 
     stages {
-        stage('Clone github repository') {
-
-        steps {
-            cleanWs()
-            sh "git clone -b main https://github.com/A6u7H/news_classification"
-		}
+        stage('Clone github repository'){
+            steps {
+                cleanWs()
+                sh "git clone -b main https://github.com/A6u7H/news_classification"
+			}
+        }
 
         stage('Login'){
             steps {
