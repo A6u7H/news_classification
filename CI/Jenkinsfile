@@ -23,37 +23,5 @@ pipeline {
                 }
             }
         }
-
-        // stage('Login'){
-        //     steps {
-        //         sh "docker login -u %DOCKERHUB_USR% -p %DOCKERHUB_PSW%"
-        //     }
-        // }
     }
-    //     stage('Create and run docker container') {
-    //         steps {
-    //             script {
-    //                 try {
-    //                     sh "docker-compose build"
-    //                 }
-    //                 finally {
-    //                     sh "docker-compose up -d"
-    //                 }
-    //             }
-    //         }
-    //     }
-
-    //     stage('Push'){
-    //         steps{
-    //             sh "docker push danjiii/bcc-classification:latest"
-    //         }
-    //     }
-
-    // }
-
-    // post {
-    //     always {
-    //         sh "docker logout"
-    //     }
-    // }
 }
