@@ -20,11 +20,11 @@ pipeline {
             }
         }
 
-        stage('Login'){
-            steps {
-                sh "docker login -u %DOCKERHUB_USR% -p %DOCKERHUB_PSW%"
-            }
-        }
+        // stage('Login'){
+        //     steps {
+        //         sh "docker login -u %DOCKERHUB_USR% -p %DOCKERHUB_PSW%"
+        //     }
+        // }
     }
     //     stage('Create and run docker container') {
     //         steps {
