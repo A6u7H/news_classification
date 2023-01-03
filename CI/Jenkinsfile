@@ -11,14 +11,14 @@ pipeline {
 	}
 
     stages {
-        stage('Clone github repository'){
+        stage('Clone github repository') {
             steps {
                 cleanWs()
                 sh "git clone -b main https://github.com/A6u7H/news_classification"
 			}
         }
 
-        stage('Login'){
+        stage('Login') {
             steps {
                 sh "sudo docker login -u ${DOCKERHUB_USR} -p ${DOCKERHUB_PSW}"
             }
@@ -36,8 +36,8 @@ pipeline {
                 }
             }
         }
-        
-        stage('Push'){
+
+        stage('Push') {
             steps {
                 sh "sudo docker push danjiii/bcc-classification:latest"
             }
