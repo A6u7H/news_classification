@@ -28,9 +28,7 @@ def predict(config_path: str):
     with open(config["PREPROCESSOR"]["target_mapping"], "r") as fp:
         category2id = json.load(fp)
 
-    id2category = {
-        v: k for k, v in category2id.items()
-    }
+    id2category = {v: k for k, v in category2id.items()}
 
     logger.info("Starting predict stage")
     pred = model.predict(test_data.Text)
