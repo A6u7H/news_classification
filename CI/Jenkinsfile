@@ -16,13 +16,12 @@ pipeline {
 	}
 
     stages {
-        stage('Hello') {
-            steps {
-                script {
-                    echo "Hello world"
-                }
-            }
-        }
+        stage('Clone github repository') {
+
+        steps {
+            cleanWs()
+            sh "git clone -b main https://github.com/A6u7H/news_classification"
+		}
 
         stage('Login'){
             steps {
