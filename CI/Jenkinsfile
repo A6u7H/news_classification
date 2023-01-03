@@ -33,7 +33,7 @@ pipeline {
         stage('Create and run docker container') {
             steps {
                 script {
-                    sh "ls"
+                    sh "cd news_classification"
                     try {
                         sh "docker compose build"
                     }
