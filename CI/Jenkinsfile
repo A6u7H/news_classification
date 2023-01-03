@@ -2,7 +2,8 @@ pipeline {
     agent any
 
     triggers {
-        pipelineTriggers([cron('H/30 * * * *'), githubPush()])
+        cron('H/30 * * * *')
+        githubPush()
     }
 
     environment {
