@@ -37,11 +37,11 @@ pipeline {
             }
         }
 
-        // stage('Push') {
-        //     steps {
-        //         sh "sudo docker push danjiii/bcc-classification:latest"
-        //     }
-        // }
+        stage('Push') {
+            steps {
+                sh "sudo docker push danjiii/bcc-classification:latest"
+            }
+        }
     }
 
     post {
