@@ -93,7 +93,6 @@ if __name__ == "__main__":
 
     bbc_train_data = preprocessor.load_train_data()
     bbc_test_data = preprocessor.load_test_data()
-
     preprocessor.target_transform(bbc_train_data, mode="train")
     bbc_train, bbc_val = preprocessor.split_data(bbc_train_data)
 
