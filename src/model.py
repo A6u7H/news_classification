@@ -27,7 +27,9 @@ class BBCModel:
                 random_state=self.config.getint("random_state")
             )
         else:
-            raise ValueError(f"Model type {self.config['type']} does not exist")
+            raise ValueError(
+                f"Model type {self.config['type']} does not exist"
+            )
         logger.info("Model has created")
         return classifier
 
@@ -42,7 +44,7 @@ class BBCModel:
         logger.info(f"Predicting: {self.config['type']}...")
         return self.model.predict(features)
 
-    def save(self, save_folder: Optional[str]=None) -> None:
+    def save(self, save_folder: Optional[str] = None) -> None:
         if save_folder is None:
             save_folder = self.config["path"]
 
@@ -56,7 +58,7 @@ class BBCModel:
 
         logger.info("Model and config have saved")
 
-    def load(self, load_folder: Optional[str]=None) -> None:
+    def load(self, load_folder: Optional[str] = None) -> None:
         if load_folder is None:
             load_folder = self.config["path"]
 
