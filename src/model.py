@@ -3,7 +3,6 @@ import os
 import pickle
 
 from sklearn.svm import SVC
-from omegaconf import DictConfig
 from typing import Optional
 from sklearn.feature_extraction.text import TfidfVectorizer
 
@@ -12,7 +11,7 @@ logger = logging.getLogger(__name__)
 
 
 class BBCModel:
-    def __init__(self, config: DictConfig):
+    def __init__(self, config):
         self.config = config
         self.model = self.create_model()
         self.vectorizer = self.create_vectorizer()
