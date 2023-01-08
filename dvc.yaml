@@ -1,0 +1,37 @@
+stages:
+  prepare:
+    cmd: python src/preprocessor.py --config_path=./configs/train_config.ini
+    deps:
+    - ./data/BBC News Sample Solution.csv
+    - ./data/BBC News Test.csv
+    - ./data/BBC News Train.csv
+    - ./src/preprocessor.py
+    - ./configs/train_config.ini
+    outs:
+    - experiments/BBC_News_Test_Split.csv
+    - experiments/BBC_News_Train_Split.csv
+    - experiments/BBC_News_Val_Split.csv
+  train:
+    cmd: python src/train.py --config_path=./configs/train_config.ini
+    deps:
+    - ./data/BBC News Sample Solution.csv
+    - ./experiments/BBC_News_Test_Split.csv
+    - ./experiments/BBC_News_Val_Split.csv
+    - ./experiments/BBC_News_Train_Split.csv
+    - ./src/train.py
+    - ./configs/train_config.ini
+    outs:
+    - ./experiments/vectorizer.pickle
+  predict:
+    cmd: python src/predict.py --config_path=./configs/train_config.ini
+    deps:
+    - ./data/BBC News Sample Solution.csv
+    - ./experiments/BBC_News_Test_Split.csv
+    - ./experiments/BBC_News_Val_Split.csv
+    - ./experiments/BBC_News_Train_Split.csv
+    - ./experiments/vectorizer.pickle
+    - ./src/predict.py
+    - ./configs/train_config.ini
+    outs:
+    - ./experiments/solution.csv
+

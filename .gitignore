@@ -130,3 +130,5 @@ dmypy.json
 
 data/
 experiments/
+/data
+/experiments
