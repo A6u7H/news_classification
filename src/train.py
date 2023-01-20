@@ -11,30 +11,35 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-def train(config_path: str):
-    logger.debug("Parse config...")
-    config = configparser.ConfigParser()
-    config.read(config_path)
+class Trainer:
+    def __init__(self, config_path: str) -> None:
+        logger.debug("Parse config...")
+        self.config = configparser.ConfigParser()
+        self.config.read(config_path)
 
-    model = BBCModel(config["MODEL"])
+        self.model = BBCModel(self.config["MODEL"])
 
-    experiments_dir = config["PREPROCESSOR"]["experiments_dir"]
-    train_split_path = os.path.join(experiments_dir, "BBC_News_Train_Split.csv")
-    train_data = pd.read_csv(train_split_path)
+    def fit(self):
+        experiments_dir = self.config["PREPROCESSOR"]["experiments_dir"]
+        train_split_path = os.path.join(
+            experiments_dir,
+            "BBC_News_Train_Split.csv"
+        )
+        train_data = pd.read_csv(train_split_path)
 
-    val_split_path = os.path.join(experiments_dir, "BBC_News_Val_Split.csv")
-    val_data = pd.read_csv(val_split_path)
+        val_split_path = os.path.join(experiments_dir, "BBC_News_Val_Split.csv")
+        val_data = pd.read_csv(val_split_path)
 
-    model.fit(train_data.Text, train_data.Category)
-    pred = model.predict(train_data.Text)
-    acc = (pred == train_data.Category).sum() / len(pred)
-    logger.debug(f"TRAIN_ACC: {acc}")
+        self.model.fit(train_data.Text, train_data.Category)
+        pred = self.model.predict(train_data.Text)
+        acc = (pred == train_data.Category).sum() / len(pred)
+        logger.debug(f"TRAIN_ACC: {acc}")
 
-    pred = model.predict(val_data.Text)
-    acc = (pred == val_data.Category).sum() / len(pred)
-    logger.debug(f"VAL_ACC: {acc}")
+        pred = self.model.predict(val_data.Text)
+        acc = (pred == val_data.Category).sum() / len(pred)
+        logger.debug(f"VAL_ACC: {acc}")
 
-    model.save()
+        self.model.save()
 
 
 def parse_args():
@@ -47,4 +52,5 @@ def parse_args():
 
 if __name__ == "__main__":
     args = parse_args()
-    train(args.config_path)
+    trainer = Trainer(args.config_path)
+    trainer.fit()
