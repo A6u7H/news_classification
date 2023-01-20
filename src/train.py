@@ -25,8 +25,8 @@ class Trainer:
             experiments_dir,
             "BBC_News_Train_Split.csv"
         )
-        train_data = pd.read_csv(train_split_path)
 
+        train_data = pd.read_csv(train_split_path)
         val_split_path = os.path.join(experiments_dir, "BBC_News_Val_Split.csv")
         val_data = pd.read_csv(val_split_path)
 
